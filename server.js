@@ -11,21 +11,9 @@ app.disable('x-powered-by');
 const PORT = process.env.PORT || 3000;
 
 app.use(helmet({
-    contentSecurityPolicy: {
-        directives: {
-            "default-src": ["'self'"],
-            "script-src": ["'self'", "'unsafe-inline'", "https:", "http:"],
-            "script-src-attr": ["'unsafe-inline'"],
-            "style-src": ["'self'", "'unsafe-inline'", "https:", "http:"],
-            "img-src": ["'self'", "data:", "https:", "http:"],
-            "connect-src": ["'self'", "https:", "http:"],
-            "font-src": ["'self'", "https:", "http:", "data:"],
-            "object-src": ["'none'"],
-            "media-src": ["'self'"],
-            "frame-src": ["'self'"]
-        },
-    },
+    contentSecurityPolicy: false,
 }));
+console.log('GIGSHIELD_VERSION: 1.1.0_CSP_DISABLED');
 app.use(compression());
 app.use(cors());
 app.use(express.json());
