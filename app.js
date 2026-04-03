@@ -397,11 +397,68 @@ function toggleSet(key) {
 }
 
 /* ── ONBOARDING / POLICY ── */
+/* ── ONBOARDING / POLICY / PAYMENT ── */
+let selectedPlan = null;
+
 function selectTier(name, price, payout) {
     document.querySelectorAll('.tier').forEach(t => t.classList.remove('sel'));
     event.currentTarget.classList.add('sel');
-    currentPlan = { name, price, payout }; S.set('plan', currentPlan);
-    showToast(`${name} selected — ${payout} max payout`, 'success', 2500);
+    selectedPlan = { name, price, payout };
+    openPayment(name, price, payout);
+}
+
+function openPayment(name, price, payout) {
+    const p = document.getElementById('payment-panel');
+    const nameEl = document.getElementById('pay-plan-name');
+    const priceEl = document.getElementById('pay-plan-price');
+    const qrImg = document.getElementById('pay-qr-img');
+    
+    if (nameEl) nameEl.textContent = name + ' Shield';
+    if (priceEl) priceEl.textContent = price;
+    
+    // Update QR data with price
+    if (qrImg) {
+        const amt = price.replace('₹','');
+        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=upi://pay?pa=gigshield@upi&pn=GigShield%20India&am=${amt}&cu=INR`;
+    }
+    
+    if (p) p.classList.add('open');
+}
+
+function closePayment() {
+    const p = document.getElementById('payment-panel');
+    if (p) p.classList.remove('open');
+}
+
+async function processPayment() {
+    const btn = document.querySelector('.pay-btn');
+    const btnText = document.getElementById('pay-btn-text');
+    const spinner = document.getElementById('pay-spinner');
+    const status = document.getElementById('payment-status');
+    const actions = document.getElementById('pay-actions');
+
+    if (!btn || !spinner) return;
+
+    btn.disabled = true;
+    btnText.style.display = 'none';
+    spinner.style.display = 'block';
+
+    // Simulate Payment Processing
+    setTimeout(() => {
+        spinner.style.display = 'none';
+        btn.style.display = 'none';
+        if (status) status.style.display = 'block';
+        
+        // Finalize selection and save
+        currentPlan = selectedPlan;
+        S.set('plan', currentPlan);
+        showToast(`Payment Successful! ${currentPlan.name} is now active.`, 'success', 3000);
+
+        setTimeout(() => {
+            closePayment();
+            saveOnboard();
+        }, 2000);
+    }, 2500);
 }
 
 async function saveOnboard() {

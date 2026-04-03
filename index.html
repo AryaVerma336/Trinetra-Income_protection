@@ -2785,8 +2785,257 @@
             display: block;
         }
 
+        /* ══════ PAYMENT GATEWAY ══════ */
+        .payment-panel {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            visibility: hidden;
+            opacity: 0;
+            transition: all .5s var(--ease);
+        }
+
+        .payment-panel.open {
+            pointer-events: all;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .payment-bd {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .payment-sh {
+            position: relative;
+            z-index: 2;
+            width: 480px;
+            max-width: 92%;
+            background: rgba(8, 14, 10, .98);
+            border: 1.5px solid rgba(255, 255, 255, .1);
+            border-radius: 28px;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, .8);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateY(30px) scale(.98);
+            transition: all .6s var(--spring);
+        }
+
+        .payment-panel.open .payment-sh {
+            transform: none;
+        }
+
+        .payment-head {
+            padding: 24px 28px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+        }
+
+        .payment-logo {
+            font-family: var(--fh);
+            font-size: 22px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .payment-body {
+            padding: 28px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .pay-sum {
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .pay-sec {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, .35);
+            margin-bottom: 16px;
+            font-family: var(--fm);
+        }
+
+        .pay-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .pay-opt {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, .04);
+            border: 1.5px solid rgba(255, 255, 255, .08);
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all .2s;
+        }
+
+        .pay-opt.active {
+            background: rgba(var(--gRgb), .08);
+            border-color: rgba(var(--gRgb), .4);
+        }
+
+        .pay-opt.disabled {
+            opacity: .4;
+            cursor: not-allowed;
+        }
+
+        .pay-opt-i {
+            font-size: 24px;
+        }
+
+        .pay-opt-t {
+            font-size: 14px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .pay-opt-s {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 2px;
+        }
+
+        .pay-radio {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, .2);
+            position: relative;
+        }
+
+        .pay-opt.active .pay-radio {
+            border-color: var(--green);
+        }
+
+        .pay-opt.active .pay-radio::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            background: var(--green);
+            border-radius: 50%;
+        }
+
+        .pay-qr-wrap {
+            padding: 24px;
+            background: rgba(255, 255, 255, .02);
+            border-radius: 24px;
+            border: 1px dashed rgba(255, 255, 255, .15);
+            margin-bottom: 10px;
+        }
+
+        .pay-qr-box {
+            width: 240px;
+            height: 240px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 12px;
+            margin: 0 auto;
+            position: relative;
+            box-shadow: 0 0 40px rgba(var(--gRgb), .15);
+        }
+
+        .pay-qr-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .pay-qr-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 46px;
+            height: 46px;
+            background: #fff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .1);
+            border: 4px solid #fff;
+        }
+
+        .pay-btm {
+            margin-top: 24px;
+        }
+
+        .pay-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--green);
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+            font-family: var(--ff);
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .3s var(--spring);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 8px 30px rgba(var(--gRgb), .4);
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 40px rgba(var(--gRgb), .5);
+        }
+
+        .pay-btn:active {
+            transform: scale(.98);
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+
+        @keyframes pgIn {
+            from { opacity: 0; transform: scale(.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* ══ AI ASSISTANT PANEL ══ */
-        #ai-panel {
+        .ai-chat {
             position: fixed;
             inset: 0;
             z-index: 200;
@@ -2826,15 +3075,15 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, .7);
         }
 
-        #ai-panel.open {
+        .ai-chat.open {
             pointer-events: all;
         }
 
-        #ai-panel.open .ai-bd {
+        .ai-chat.open .ai-bd {
             opacity: 1;
         }
 
-        #ai-panel.open .ai-window {
+        .ai-chat.open .ai-window {
             transform: translateY(0) scale(1);
             opacity: 1;
         }
@@ -3467,7 +3716,7 @@
             .forecast { grid-template-columns: repeat(2, 1fr) !important; }
 
             /* ── FULL SCREEN PANELS ── */
-            .login-panel, .onboard, .sim, .ai-chat, .set-pan, .comm, .claim-flow, .appeal, .notif-pan {
+            .login-panel, .onboard, .sim, .ai-chat, .set-pan, .comm, .claim-flow, .appeal, .notif-pan, .payment-panel {
                 width: 100% !important;
                 height: 100vh !important;
                 right: 0 !important;
@@ -3476,7 +3725,7 @@
                 border-radius: 0 !important;
                 transform: translateY(100%);
             }
-            .login-panel.open, .onboard.open, .sim.open, .ai-chat.open, .set-pan.open, .comm.open, .claim-flow.open, .appeal.open, .notif-pan.open {
+            .login-panel.open, .onboard.open, .sim.open, .ai-chat.open, .set-pan.open, .comm.open, .claim-flow.open, .appeal.open, .notif-pan.open, .payment-panel.open {
                 transform: translateY(0);
             }
 
@@ -3797,7 +4046,7 @@
     </div>
 
     <!-- ══ AI ASSISTANT ══ -->
-    <div id="ai-panel">
+    <div id="ai-chat" class="ai-chat">
         <div class="ai-bd" onclick="toggleAI()"></div>
         <div class="ai-window">
             <div class="ai-header">
@@ -3825,6 +4074,75 @@
     </div>
 
     <button id="ai-fab" onclick="toggleAI()">🤖<div class="notif-dot"></div></button>
+
+    <!-- ══ PAYMENT GATEWAY ══ -->
+    <div id="payment-panel" class="payment-panel">
+        <div class="payment-bd" onclick="closePayment()"></div>
+        <div class="payment-sh">
+            <div class="payment-head">
+                <div class="payment-logo">💳 GigShield Pay</div>
+                <button class="ai-close" onclick="closePayment()">✕</button>
+            </div>
+            <div class="payment-body">
+                <div class="pay-sum">
+                    <div>
+                        <div id="pay-plan-name" style="font-size:18px;font-weight:700;color:#fff;">Standard Shield</div>
+                        <div style="font-size:12px;color:rgba(255,255,255,.4);">Weekly Insurance Premium</div>
+                    </div>
+                    <div id="pay-plan-price" style="font-size:24px;font-weight:700;color:var(--green);font-family:var(--fh);">₹59</div>
+                </div>
+
+                <div class="pay-sec">Payment Method</div>
+                <div class="pay-opts">
+                    <div class="pay-opt active">
+                        <div class="pay-opt-i">🇮🇳</div>
+                        <div style="flex:1;">
+                            <div class="pay-opt-t">UPI QR Scan</div>
+                            <div class="pay-opt-s">WhatsApp, GPay, PhonePe, Paytm</div>
+                        </div>
+                        <div class="pay-radio"></div>
+                    </div>
+                    <div class="pay-opt disabled">
+                        <div class="pay-opt-i">💳</div>
+                        <div style="flex:1;">
+                            <div class="pay-opt-t">Saved Cards</div>
+                            <div class="pay-opt-s">Ends in 4242 · HDFC Bank</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pay-qr-wrap">
+                    <div style="font-size:11px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;">Scan to Secure Protection</div>
+                    <div class="pay-qr-box">
+                        <img id="pay-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=upi://pay?pa=gigshield@upi&pn=GigShield%20India&am=59&cu=INR" alt="UPI QR Code">
+                        <div class="pay-qr-logo">🛡️</div>
+                    </div>
+                    <div style="margin-top:16px;text-align:center;">
+                        <div id="pay-timer" style="font-family:var(--fm);font-size:13px;color:var(--green);">05:00</div>
+                        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;">QR code expires in 5 minutes</div>
+                    </div>
+                </div>
+
+                <div id="payment-status" style="display:none;margin-top:20px;text-align:center;padding:20px;background:rgba(var(--gRgb),.1);border:1px solid rgba(var(--gRgb),.3);border-radius:15px;animation:pgIn .4s var(--spring);">
+                    <div style="font-size:32px;margin-bottom:8px;">✅</div>
+                    <div style="font-size:16px;font-weight:700;color:var(--green);">Payment Successful!</div>
+                    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;">Shielding activated. Redirecting...</div>
+                </div>
+
+                <div class="pay-btm" id="pay-actions">
+                    <button class="pay-btn" onclick="processPayment()">
+                        <span id="pay-btn-text">Pay Securely via UPI</span>
+                        <div id="pay-spinner" class="spinner" style="display:none;"></div>
+                    </button>
+                    <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;opacity:.4;font-size:10px;">
+                        <span>🔒 256-bit AES Encryption</span>
+                        <span>·</span>
+                        <span>✅ NPCI Certified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ══ SETTINGS PANEL ══ -->
     <div id="settings-panel">
