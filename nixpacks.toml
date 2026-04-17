@@ -2,7 +2,10 @@
 nixPkgs = ["sqlite", "gcc", "g++", "gnumake", "python3", "nodejs"]
 
 [phases.build]
-cmds = ["npm install --prefix backend", "cd backend && npm rebuild sqlite3 --build-from-source"]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"
 
 [variables]
 LD_LIBRARY_PATH = ""

@@ -1,0 +1,14 @@
+{
+  "name": "trinetra-monorepo",
+  "version": "1.0.0",
+  "description": "AI-powered parametric income insurance platform",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && node server.js",
+    "build": "npm install --prefix backend && cd backend && npm rebuild sqlite3 --build-from-source",
+    "ml-train": "cd ml && python3 main.py"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
