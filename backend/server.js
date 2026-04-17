@@ -5,6 +5,16 @@ const helmet = require('helmet');
 const compression = require('compression');
 const path = require('path');
 const db = require('./database');
+const crypto = require('crypto');
+const Razorpay = require('razorpay');
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_SdPDZn6VBlU3gR',
+  key_secret: process.env.RAZORPAY_KEY_SECRET || 'aviqXKKUL6pJYriyMG4eMBQH',
+});
+const AIEngine = require('./engine/ai_engine');
+const BettermentModel = require('./engine/betterment_model');
+const MonitorService = require('./services/monitor_service');
 
 const app = express();
 app.disable('x-powered-by');
@@ -23,24 +33,90 @@ app.use(compression());
 app.use(cors());
 app.use(express.json());
 // Serve the main index.html file statically
-app.use(express.static(path.join(__dirname, '')));
+app.use(express.static(path.join(__dirname, '../frontend')));
+
+// ====================
+// Payment Endpoints
+// ====================
+app.post('/api/payment/create-order', async (req, res) => {
+    try {
+        const { amount } = req.body;
+        if (!amount) return res.status(400).json({ error: "Amount is required" });
+
+        const options = {
+            amount: Math.round(amount * 100), // amount in the smallest currency unit (paise)
+            currency: "INR",
+            receipt: "receipt_" + Date.now()
+        };
+        const order = await razorpay.orders.create(options);
+        res.json(order);
+    } catch (error) {
+        console.error("Razorpay Error:", error);
+        res.status(500).json({ error: "Failed to create order" });
+    }
+});
+
+app.post('/api/payment/verify', (req, res) => {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    
+    const secret = process.env.RAZORPAY_KEY_SECRET || 'aviqXKKUL6pJYriyMG4eMBQH';
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+    
+    const expectedSignature = crypto
+        .createHmac("sha256", secret)
+        .update(body.toString())
+        .digest("hex");
+        
+    if (expectedSignature === razorpay_signature) {
+        // Payment is verified
+        res.json({ success: true, message: "Payment verified successfully" });
+    } else {
+        res.status(400).json({ success: false, error: "Invalid signature" });
+    }
+});
 
 // ====================
 // Auth Endpoints
 // ====================
 
-app.post('/api/auth/login', (req, res) => {
-    const { phone, password } = req.body;
+// In-memory OTP store (for production, use Redis or DB with TTL)
+const otpStore = {};
+
+app.post('/api/auth/request-otp', (req, res) => {
+    const { phone } = req.body;
     if (!phone) return res.status(400).json({ error: "Phone number required" });
+    
+    // Generate 6-digit OTP
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore[phone] = { otp, expiry: Date.now() + 300000 }; // 5 min expiry
+    
+    res.json({ 
+        message: "OTP sent successfully (Simulated for Demo)", 
+        demoCode: "123456",
+        devOTP: otp // Make the real OTP visible for development
+    });
+});
+
+app.post('/api/auth/login', (req, res) => {
+    const { phone, otp } = req.body;
+    if (!phone) return res.status(400).json({ error: "Phone number required" });
+
+    // Validate OTP
+    const stored = otpStore[phone];
+    // For demo purposes, we also allow '123456'
+    if (otp !== '123456' && (!stored || stored.otp !== otp || Date.now() > stored.expiry)) {
+        return res.status(401).json({ error: "Invalid or expired OTP" });
+    }
+    delete otpStore[phone]; // Consume OTP
 
     db.get("SELECT * FROM users WHERE phone = ?", [phone], (err, row) => {
         if (err) return res.status(500).json({ error: "Database error" });
         if (!row) {
-            // Auto-register if not found
+            // Auto-register if not found (Passwordless style)
             db.run(
                 `INSERT INTO users (phone, password, name, platform, zone, upi, pid, job_type, income) 
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [phone, password || 'nopass', 'New User', '', '', '', '', 'Freelancer', 0],
+                [phone, 'otp_auth', 'New User', '', '', '', '', 'Freelancer', 0],
                 function(err) {
                     if (err) return res.status(500).json({ error: "Failed to create user" });
                     db.get("SELECT * FROM users WHERE id = ?", [this.lastID], (err, newUser) => {
@@ -50,16 +126,12 @@ app.post('/api/auth/login', (req, res) => {
             );
             return;
         }
-
-        // Allow passwordless auth if password is not provided
-        if (password && row.password !== password) return res.status(401).json({ error: "Invalid password" });
-
         res.json({ user: row });
     });
 });
 
 app.post('/api/auth/signup', (req, res) => {
-    const { phone, password, name, platform, zone, upi, pid } = req.body;
+    const { phone, name, platform, zone, upi, pid } = req.body;
 
     // Check if phone already registered
     db.get("SELECT * FROM users WHERE phone = ?", [phone], (err, row) => {
@@ -69,7 +141,7 @@ app.post('/api/auth/signup', (req, res) => {
         db.run(
             `INSERT INTO users (phone, password, name, platform, zone, upi, pid) 
              VALUES (?, ?, ?, ?, ?, ?, ?)`,
-            [phone, password, name, platform, zone, upi, pid],
+            [phone, 'otp_auth', name, platform, zone, upi, pid],
             function (err) {
                 if (err) return res.status(500).json({ error: "Failed to create user" });
 
@@ -114,13 +186,11 @@ app.put('/api/user/:id', (req, res) => {
 // ====================
 
 app.post('/api/policy', (req, res) => {
-    const { phone, income, job_type } = req.body;
+    const { phone, income, job_type, zone } = req.body;
     
-    // Risk Calculation logic
-    let riskMultiplier = 1;
-    if (job_type === 'Delivery') riskMultiplier = 1.5; // High Risk
-    else if (job_type === 'Driver') riskMultiplier = 1.2; // Medium Risk
-    else if (job_type === 'Freelancer') riskMultiplier = 1.0; // Low Risk
+    // AI Risk Assessment
+    const riskScore = AIEngine.calculateRiskScore(job_type, income, zone || 'Default');
+    let riskMultiplier = 1 + (riskScore * 0.5); // Multiplier between 1.0 and 1.5
 
     const premium = Math.round((income * 0.005) * riskMultiplier);
     const payout = Math.round(income * 0.5); // Max 50% of income coverage
@@ -128,8 +198,8 @@ app.post('/api/policy', (req, res) => {
     const createdAt = new Date().toISOString();
 
     db.run(
-        `INSERT INTO policies (phone, income, job_type, premium, payout, status, created_at) VALUES (?, ?, ?, ?, ?, 'Active', ?)`,
-        [phone, income, job_type, premium, payout, createdAt],
+        `INSERT INTO policies (phone, income, job_type, zone, premium, payout, risk_score, status, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, 'Active', ?)`,
+        [phone, income, job_type, zone, premium, payout, riskScore, createdAt],
         function(err) {
             if (err) return res.status(500).json({ error: "Failed to create policy" });
             db.get("SELECT * FROM policies WHERE id = ?", [this.lastID], (err, policy) => {
@@ -153,28 +223,61 @@ app.get('/api/policy/:phone', (req, res) => {
 });
 
 app.post('/api/claim', (req, res) => {
-    const { phone, amount, proof } = req.body;
+    const { phone, amount, proof, trigger_type } = req.body;
     if (!phone || !amount) return res.status(400).json({ error: "Missing required fields" });
     
-    const fraud_flag = amount > 5000 ? 1 : 0;
-    const date = new Date().toISOString();
-    
-    db.run(
-        `INSERT INTO claims (phone, amount, proof, status, fraud_flag, date) VALUES (?, ?, ?, 'Pending Review', ?, ?)`,
-        [phone, amount, proof, fraud_flag, date],
-        function(err) {
-            if (err) return res.status(500).json({ error: "Failed to submit claim" });
-            db.get("SELECT * FROM claims WHERE id = ?", [this.lastID], (err, claim) => {
-                res.status(201).json({ claim });
-            });
-        }
-    );
+    // Fetch user history for AI evaluation
+    db.all("SELECT * FROM claims WHERE phone = ?", [phone], async (err, history) => {
+        // Evaluate fraud - manual triggers are scrutinized more
+        const fraudAnalysis = await AIEngine.detectFraud({ amount, proof, trigger_type }, history || []);
+        const date = new Date().toISOString();
+        
+        db.run(
+            `INSERT INTO claims (phone, amount, proof, status, fraud_flag, fraud_score, ai_analysis, date, trigger_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [phone, amount, proof, fraudAnalysis.isFraud ? 'Pending Review' : 'Auto-Approved', fraudAnalysis.isFraud ? 1 : 0, fraudAnalysis.fraudScore, fraudAnalysis.analysis, date, trigger_type || 'Automatic'],
+            function(err) {
+                if (err) return res.status(500).json({ error: "Failed to submit claim" });
+                db.get("SELECT * FROM claims WHERE id = ?", [this.lastID], (err, claim) => {
+                    res.status(201).json({ claim });
+                });
+            }
+        );
+    });
 });
 
 app.get('/api/claims/:phone', (req, res) => {
     db.all("SELECT * FROM claims WHERE phone = ? ORDER BY id DESC", [req.params.phone], (err, rows) => {
         if (err) return res.status(500).json({ error: "Database error" });
         res.json({ claims: rows });
+    });
+});
+
+// ====================
+// Betterment AI Insights
+// ====================
+
+app.get('/api/betterment/:phone', (req, res) => {
+    db.get("SELECT * FROM betterment_insights WHERE phone = ? ORDER BY id DESC LIMIT 1", [req.params.phone], (err, row) => {
+        if (err) return res.status(500).json({ error: "Database error" });
+        if (!row) return res.status(404).json({ error: "No insights found yet" });
+        res.json({ insight: { ...row, insights: JSON.parse(row.insights) } });
+    });
+});
+
+app.post('/api/betterment/simulate', async (req, res) => {
+    const { phone } = req.body;
+    // Force a fresh simulation for the user
+    db.get("SELECT * FROM policies WHERE phone = ? LIMIT 1", [phone], async (err, policy) => {
+        if (!policy) return res.status(404).json({ error: "No active policy" });
+        
+        // Mock weather for simulation (would normally come from monitor service)
+        const mockWeather = { temp: 32, precipitation: 5, windSpeed: 25 };
+        const insight = await BettermentModel.generateInsight(mockWeather, 180);
+        
+        db.run("INSERT INTO betterment_insights (phone, prediction_date, insights, risk_profile, score) VALUES (?, ?, ?, ?, ?)",
+            [phone, new Date().toISOString(), JSON.stringify(insight), 'Proactive', insight.prob]);
+        
+        res.json({ insight });
     });
 });
 
@@ -357,6 +460,13 @@ app.get('/api/weather/live', async (req, res) => {
     }
 });
 
+app.get('/api/triggers/recent', (req, res) => {
+    db.all("SELECT * FROM global_triggers ORDER BY timestamp DESC LIMIT 5", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: "Database error" });
+        res.json({ triggers: rows });
+    });
+});
+
 // Startup Validation
 if (!process.env.GEMINI_API_KEY) {
     console.warn('\x1b[33m%s\x1b[0m', '⚠️ WARNING: GEMINI_API_KEY is not set in environment variables. AI Chat will not work.');
@@ -365,6 +475,9 @@ if (!process.env.GEMINI_API_KEY) {
 const server = app.listen(PORT, '0.0.0.0', () => {
     console.log(`Trinetra backend listening on port ${PORT} (hosting: 0.0.0.0)`);
     console.log('Production security (helmet) and compression active.');
+    
+    // Start the Automated Parametric Monitor
+    MonitorService.start();
 });
 
 // Graceful Shutdown

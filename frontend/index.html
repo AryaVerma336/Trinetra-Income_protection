@@ -257,14 +257,251 @@
 
         @keyframes pulse {
 
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(var(--rRgb), .4);
-            }
-
             70% {
                 box-shadow: 0 0 0 6px rgba(var(--rRgb), 0);
             }
+        }
+
+        /* AI FEATURES */
+        .sh-mon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(var(--gRgb), 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(var(--gRgb), 0.2);
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--green);
+            margin-right: 12px;
+        }
+
+        .sh-mon-dot {
+            width: 7px;
+            height: 7px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .fraud-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .fraud-low {
+            background: rgba(var(--gRgb), 0.1);
+            color: var(--green);
+        }
+
+        .fraud-high {
+            background: rgba(var(--rRgb), 0.1);
+            color: var(--red);
+        }
+
+        /* BETTERMENT AI STYLES */
+        .bet-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .bet-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s var(--ease);
+        }
+
+        .bet-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            transform: translateY(-4px);
+            border-color: rgba(var(--pRgb), 0.3);
+        }
+
+        .bet-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            height: 48px;
+            width: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(var(--pRgb), 0.1);
+            border-radius: 12px;
+            color: var(--purple);
+        }
+
+        .bet-h {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .bet-p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        .bet-insight {
+            background: linear-gradient(135deg, rgba(var(--pRgb), 0.15), rgba(var(--bRgb), 0.15));
+            border: 1px solid rgba(var(--pRgb), 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            margin-top: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bet-insight::after {
+            content: 'AI';
+            position: absolute;
+            top: -10px;
+            right: -5px;
+            font-size: 60px;
+            font-family: var(--fh);
+            font-weight: 900;
+            opacity: 0.05;
+            font-style: italic;
+        }
+
+        .bet-prob {
+            font-family: var(--fm);
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .bet-prob span {
+            font-size: 14px;
+            opacity: 0.5;
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        .forecast-bar {
+            display: flex;
+            gap: 4px;
+            height: 60px;
+            align-items: flex-end;
+            margin-top: 20px;
+        }
+
+        .f-day {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+            transition: height 0.6s var(--spring);
+        }
+
+        .f-day.high {
+            background: var(--red);
+            opacity: 0.6;
+        }
+
+        .f-day.med {
+            background: var(--amber);
+            opacity: 0.6;
+        }
+
+        .f-day.low {
+            background: var(--green);
+            opacity: 0.6;
+        }
+
+        /* BOTTOM NAVIGATION BAR (Mobile Only) */
+        #bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: clamp(65px, 9vh, 75px);
+            background: rgba(12, 18, 14, 0.95);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: none;
+            /* Desktop hidden */
+            z-index: 999;
+            padding: 8px 16px env(safe-area-inset-bottom);
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            #bottom-nav {
+                display: flex;
+            }
+
+            .sb {
+                display: none !important;
+            }
+
+            .main-c {
+                margin-left: 0 !important;
+                padding-bottom: 110px !important;
+                padding-top: 70px !important;
+            }
+
+            #mob-header {
+                display: flex !important;
+            }
+        }
+
+        .bn-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s var(--ease);
+            flex: 1;
+        }
+
+        .bn-item.active {
+            color: var(--green);
+        }
+
+        .bn-item.active .bn-icon {
+            transform: translateY(-2px);
+        }
+
+        .bn-icon {
+            font-size: 22px;
+            transition: transform 0.3s var(--spring);
+        }
+
+        .lang-o.on {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .f-day.high {
+            background: var(--red);
+            opacity: 0.6;
+        }
+
+        .f-day.med {
+            background: var(--amber);
+            opacity: 0.6;
+        }
+
+        .f-day.low {
+            background: var(--green);
+            opacity: 0.6;
         }
 
         /* ══════ LANDING ══════ */
@@ -2457,6 +2694,158 @@
             font-family: var(--fm);
         }
 
+        /* ══════ CLAIM MODAL ══════ */
+        #claim-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all .4s var(--ease);
+        }
+
+        #claim-modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cm-bd {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, .75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .cm-sh {
+            position: relative;
+            z-index: 2;
+            width: 480px;
+            max-width: 90%;
+            background: rgba(12, 18, 14, .95);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, .15);
+            border-radius: 24px;
+            overflow: hidden;
+            transform: translateY(20px) scale(0.98);
+            transition: all .4s var(--spring);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, .8);
+        }
+
+        #claim-modal.open .cm-sh {
+            transform: none;
+        }
+
+        .cm-head {
+            padding: 24px 28px;
+            border-bottom: 1px solid rgba(255, 255, 255, .08);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .cm-t {
+            font-family: var(--fh);
+            font-size: 24px;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .cm-body {
+            padding: 28px;
+        }
+
+        .cm-ft {
+            padding: 20px 28px;
+            background: rgba(255, 255, 255, .03);
+            border-top: 1px solid rgba(255, 255, 255, .06);
+            display: flex;
+            gap: 12px;
+        }
+
+        .cm-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            font-family: var(--ff);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s var(--spring);
+        }
+
+        .cm-btn-p {
+            background: var(--green);
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 20px rgba(var(--gRgb), .3);
+        }
+
+        .cm-btn-p:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--gRgb), .45);
+        }
+
+        .cm-btn-s {
+            background: rgba(255, 255, 255, .1);
+            color: rgba(255, 255, 255, .8);
+            border: 1px solid rgba(255, 255, 255, .15);
+        }
+
+        .cm-btn-s:hover {
+            background: rgba(255, 255, 255, .15);
+        }
+
+        /* ── CLAIM MENU GRID ── */
+        .cm-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .cm-opt {
+            padding: 20px 16px;
+            background: rgba(255, 255, 255, .03);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all .25s var(--spring);
+        }
+
+        .cm-opt:hover {
+            background: rgba(var(--pRgb), .12);
+            border-color: rgba(var(--pRgb), .3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+        }
+
+        .cm-opt-i {
+            font-size: 32px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .cm-opt-t {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            display: block;
+        }
+
+        .cm-opt-d {
+            font-size: 10px;
+            color: rgba(255, 255, 255, .4);
+            margin-top: 4px;
+            display: block;
+            line-height: 1.3;
+        }
+
         /* FORECAST */
         .forecast {
             display: grid;
@@ -3972,7 +4361,8 @@
                 <div class="land-ey">
                     <div class="ldot"></div>Income Protection Platform
                 </div>
-                <h1 class="land-t">Income protection<br>for <span class="hi">India's</span><br><em>delivery heroes</em></h1>
+                <h1 class="land-t">Income protection<br>for <span class="hi">India's</span><br><em>delivery heroes</em>
+                </h1>
                 <div class="land-ctas" style="margin-top: 36px;">
                     <button class="cta cta-p" onclick="openLogin('signup')">Start Coverage — ₹29/week</button>
                     <button class="cta cta-g" onclick="openLogin()">Partner Login</button>
@@ -4035,7 +4425,7 @@
                     <div class="gbi-icon">👥</div>
                     <div>
                         <div class="gbi-lbl">Refer & Earn</div>
-                        <div class="gbi-sub">₹100 per referral</div>
+
                     </div>
                 </div>
                 <div class="gbcta" onclick="openLogin('signup')">
@@ -4067,10 +4457,26 @@
                 </div>
                 <!-- LOGIN -->
                 <div class="lp-tc active" id="tc-login">
-                    <div class="fg"><label class="lp-lbl">Phone Number</label><input class="lp-in" id="login-phone"
-                            type="tel" placeholder="+91 98765 43210"></div>
-                    <div class="fg"><label class="lp-lbl">Password</label><input class="lp-in" id="login-pass"
-                            type="password" placeholder="Enter password"></div>
+                    <div id="dev-otp-display"
+                        style="display:none; background:rgba(34,197,94,0.1); border:1px dashed var(--green); border-radius:10px; padding:10px; margin-bottom:15px; text-align:center;">
+                        <div
+                            style="font-size:10px; color:var(--green); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px;">
+                            Developer Mode · OTP Received</div>
+                        <div id="dev-otp-code" style="font-size:24px; font-weight:700; color:#fff; letter-spacing:4px;">
+                            ------</div>
+                    </div>
+                    <div class="fg">
+                        <label class="lp-lbl">Phone Number</label>
+                        <input class="lp-in" id="login-phone" type="tel" placeholder="+91 98765 43210">
+                    </div>
+
+                    <div class="fg" id="login-otp-wrap" style="display:none;">
+                        <label class="lp-lbl">One-Time Password (OTP)</label>
+                        <input class="lp-in" id="login-otp" type="number" placeholder="Enter 6-digit code">
+                        <div id="otp-timer" style="font-size:11px;color:var(--green);margin-top:4px;display:none;">
+                            Resend OTP in <span id="otp-sec">30</span>s</div>
+                    </div>
+
                     <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
                         <input type="checkbox" id="remember-me"
                             style="width:15px;height:15px;accent-color:var(--green);cursor:pointer;">
@@ -4078,7 +4484,10 @@
                             style="font-size:12px;color:rgba(255,255,255,.5);cursor:pointer;">Remember me on this
                             device</label>
                     </div>
-                    <button class="lp-sub" onclick="doLogin()">Log In to Trinetra</button>
+
+                    <button class="lp-sub" id="btn-request-otp" onclick="requestOTP()">Send OTP to Phone</button>
+                    <button class="lp-sub" id="btn-verify-otp" onclick="doLogin()"
+                        style="display:none; background:var(--green);">Verify & Enter Trinetra</button>
                     <div class="lp-div"><span>or</span></div>
                     <div style="display:flex;gap:8px;">
                         <button
@@ -4145,9 +4554,7 @@
                         <div class="fg"><label class="lp-lbl">UPI ID</label><input class="lp-in" id="su-upi"
                                 placeholder="yourname@upi"></div>
                     </div>
-                    <div class="fg"><label class="lp-lbl">Password</label><input class="lp-in" id="su-pass"
-                            type="password" placeholder="Create password"></div>
-                    <button class="lp-sub" onclick="doSignup()">Create Account & Get Coverage</button>
+                    <button class="lp-sub" onclick="doSignup()">Create Account & Get OTP</button>
                     <div style="text-align:center;margin-top:12px;font-size:11px;color:rgba(255,255,255,.2);">Coverage
                         activates instantly. ₹29/week auto-debit.</div>
                 </div>
@@ -4159,7 +4566,7 @@
                     <div style="display:flex;flex-direction:column;gap:10px;">
                         <button
                             style="padding:13px 16px;border-radius:12px;border:1.5px solid rgba(var(--gRgb),.3);background:rgba(var(--gRgb),.08);color:#86efac;font-family:var(--ff);font-size:13px;font-weight:600;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;transition:all .2s;"
-                            onclick="loadDemo('worker')">
+                            onclick="loadDemo('zomato')">
                             <span style="font-size:22px;">🏍️</span>
                             <div>
                                 <div>Delivery Partner View</div>
@@ -4169,7 +4576,7 @@
                         </button>
                         <button
                             style="padding:13px 16px;border-radius:12px;border:1.5px solid rgba(var(--bRgb),.3);background:rgba(var(--bRgb),.08);color:#93c5fd;font-family:var(--ff);font-size:13px;font-weight:600;cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;transition:all .2s;"
-                            onclick="loadDemo('admin')">
+                            onclick="loadAdmin()">
                             <span style="font-size:22px;">📊</span>
                             <div>
                                 <div>Admin / Insurer View</div>
@@ -4214,79 +4621,6 @@
     <button id="ai-fab" onclick="toggleAI()">🤖<div class="notif-dot"></div></button>
 
     <!-- ══ PAYMENT GATEWAY ══ -->
-    <div id="payment-panel" class="payment-panel">
-        <div class="payment-bd" onclick="closePayment()"></div>
-        <div class="payment-sh">
-            <div class="payment-head">
-                <div class="payment-logo">💳 Trinetra Pay</div>
-                <button class="ai-close" onclick="closePayment()">✕</button>
-            </div>
-            <div class="payment-body">
-                <div class="pay-sum">
-                    <div>
-                        <div id="pay-plan-name" style="font-size:18px;font-weight:700;color:#fff;">Standard Shield</div>
-                        <div style="font-size:12px;color:rgba(255,255,255,.4);">Weekly Insurance Premium</div>
-                    </div>
-                    <div id="pay-plan-price"
-                        style="font-size:24px;font-weight:700;color:var(--green);font-family:var(--fh);">₹59</div>
-                </div>
-
-                <div class="pay-sec">Payment Method</div>
-                <div class="pay-opts">
-                    <div class="pay-opt active">
-                        <div class="pay-opt-i">🇮🇳</div>
-                        <div style="flex:1;">
-                            <div class="pay-opt-t">UPI QR Scan</div>
-                            <div class="pay-opt-s">WhatsApp, GPay, PhonePe, Paytm</div>
-                        </div>
-                        <div class="pay-radio"></div>
-                    </div>
-                    <div class="pay-opt disabled">
-                        <div class="pay-opt-i">💳</div>
-                        <div style="flex:1;">
-                            <div class="pay-opt-t">Saved Cards</div>
-                            <div class="pay-opt-s">Ends in 4242 · HDFC Bank</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="pay-qr-wrap">
-                    <div
-                        style="font-size:11px;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;text-align:center;">
-                        Scan to Secure Protection</div>
-                    <div class="pay-qr-box">
-                        <img id="pay-qr-img" src="/images/qr-official.jpg" alt="UPI QR Code">
-                    </div>
-                    <div style="margin-top:16px;text-align:center;">
-                        <div id="pay-timer" style="font-family:var(--fm);font-size:13px;color:var(--green);">05:00</div>
-                        <div style="font-size:11px;color:rgba(255,255,255,.3);margin-top:4px;">QR code expires in 5
-                            minutes</div>
-                    </div>
-                </div>
-
-                <div id="payment-status"
-                    style="display:none;margin-top:20px;text-align:center;padding:20px;background:rgba(var(--gRgb),.1);border:1px solid rgba(var(--gRgb),.3);border-radius:15px;animation:pgIn .4s var(--spring);">
-                    <div style="font-size:32px;margin-bottom:8px;">✅</div>
-                    <div style="font-size:16px;font-weight:700;color:var(--green);">Payment Successful!</div>
-                    <div style="font-size:12px;color:rgba(255,255,255,.5);margin-top:4px;">Shielding activated.
-                        Redirecting...</div>
-                </div>
-
-                <div class="pay-btm" id="pay-actions">
-                    <button class="pay-btn" onclick="processPayment()">
-                        <span id="pay-btn-text">Pay Securely via UPI</span>
-                        <div id="pay-spinner" class="spinner" style="display:none;"></div>
-                    </button>
-                    <div
-                        style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:12px;opacity:.4;font-size:10px;">
-                        <span>🔒 256-bit AES Encryption</span>
-                        <span>·</span>
-                        <span>✅ NPCI Certified</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- ══ SETTINGS PANEL ══ -->
     <div id="settings-panel">
@@ -4385,6 +4719,85 @@
     <!-- Mobile backdrop (drawer overlay) -->
     <div id="mob-backdrop" onclick="toggleMobSidebar()"></div>
 
+    <!-- ══ MANUAL CLAIM MODAL ══ -->
+    <div id="claim-modal">
+        <div class="cm-bd" onclick="closeClaimModal()"></div>
+        <div class="cm-sh">
+            <div class="cm-head">
+                <div class="cm-t" id="cm-title">File a Claim</div>
+                <button class="lp-close" onclick="closeClaimModal()">✕</button>
+            </div>
+            <div class="cm-body">
+                <!-- STEP 1: MENU -->
+                <div id="cm-step-menu">
+                    <div style="font-size:13px; color:rgba(255,255,255,.5); margin-bottom:16px;">Select the category
+                        that best describes your incident:</div>
+                    <div class="cm-grid">
+                        <div class="cm-opt" onclick="selectClaimType('Accident', '🏍️')">
+                            <span class="cm-opt-i">🏍️</span>
+                            <span class="cm-opt-t">Accident</span>
+                            <span class="cm-opt-d">On-duty collision or injury</span>
+                        </div>
+                        <div class="cm-opt" onclick="selectClaimType('Medical Emergency', '🏥')">
+                            <span class="cm-opt-i">🏥</span>
+                            <span class="cm-opt-t">Medical</span>
+                            <span class="cm-opt-d">Sudden illness or emergency</span>
+                        </div>
+                        <div class="cm-opt" onclick="selectClaimType('Platform Outage', '📵')">
+                            <span class="cm-opt-i">📵</span>
+                            <span class="cm-opt-t">Platform</span>
+                            <span class="cm-opt-d">App outage or tech issue</span>
+                        </div>
+                        <div class="cm-opt" onclick="selectClaimType('Vehicle Breakdown', '🛠️')">
+                            <span class="cm-opt-i">🛠️</span>
+                            <span class="cm-opt-t">Breakdown</span>
+                            <span class="cm-opt-d">Mechanical failure on-duty</span>
+                        </div>
+                        <div class="cm-opt" onclick="selectClaimType('Weather Impact', '⛈️')">
+                            <span class="cm-opt-i">⛈️</span>
+                            <span class="cm-opt-t">Weather</span>
+                            <span class="cm-opt-d">Extreme local weather event</span>
+                        </div>
+                        <div class="cm-opt" onclick="selectClaimType('Other', '❓')">
+                            <span class="cm-opt-i">❓</span>
+                            <span class="cm-opt-t">Other</span>
+                            <span class="cm-opt-d">Other emergency incident</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: FORM -->
+                <div id="cm-step-form" style="display:none;">
+                    <div
+                        style="display:flex; align-items:center; gap:12px; margin-bottom:20px; padding:12px; background:rgba(255,255,255,.05); border-radius:12px;">
+                        <div id="cm-sel-icon" style="font-size:24px;">🏍️</div>
+                        <div>
+                            <div id="cm-sel-type" style="font-weight:600; color:#fff;">Accident</div>
+                            <div style="font-size:11px; color:var(--purple); cursor:pointer;" onclick="showClaimMenu()">
+                                ← Change Category</div>
+                        </div>
+                    </div>
+
+                    <label class="lp-lbl">Claim Amount (₹)</label>
+                    <input type="number" id="claim-amount" class="lp-in" placeholder="Suggested: ₹500 - ₹2500"
+                        value="1200">
+
+                    <label class="lp-lbl">Incident Details</label>
+                    <textarea id="claim-proof" class="lp-in" style="height:120px;resize:none;"
+                        placeholder="Please describe what happened..."></textarea>
+
+                    <div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.4;margin-top:12px;">
+                        ℹ️ Your claim will be analyzed by Trinetra AI and processed via UPI within 24 hours.
+                    </div>
+                </div>
+            </div>
+            <div class="cm-ft" id="cm-form-ft" style="display:none;">
+                <button class="cm-btn cm-btn-s" onclick="showClaimMenu()">Back</button>
+                <button class="cm-btn cm-btn-p" onclick="submitManualClaim()">Submit Claim</button>
+            </div>
+        </div>
+    </div>
+
     <div id="app">
         <!-- SIDEBAR -->
         <div class="sb">
@@ -4406,68 +4819,73 @@
                 <div class="sb-plan" id="sb-plan">STANDARD</div>
             </div>
             <div class="nav-w">
-                <div class="nsec">Main</div>
-                <div class="ni active" onclick="goPage('dashboard')">
-                    <div class="ni-i">📊</div>
-                    <div class="ni-l">Dashboard</div>
-                </div>
-                <div class="ni" onclick="goPage('policy')">
-                    <div class="ni-i">🛡️</div>
-                    <div class="ni-l">My Policy</div>
-                </div>
-                <div class="ni" onclick="goPage('claims')">
-                    <div class="ni-i">💰</div>
-                    <div class="ni-l">Claims & Payouts</div>
-                    <div class="ni-b" id="claims-badge">1</div>
-                </div>
-                <div class="ni" onclick="goPage('notifications')">
-                    <div class="ni-i">🔔</div>
-                    <div class="ni-l">Notifications</div>
-                    <div class="ni-b" id="notif-badge">3</div>
-                </div>
-
-                <div class="nsec" style="margin-top:7px;">Enrollment</div>
-                <div class="ni" onclick="goPage('onboard')">
-                    <div class="ni-i">✨</div>
-                    <div class="ni-l">Get Coverage</div>
-                </div>
-                <div class="ni" onclick="goPage('tiers')">
-                    <div class="ni-i">📋</div>
-                    <div class="ni-l">Coverage Plans</div>
-                </div>
-                <div class="ni" onclick="goPage('referral')">
-                    <div class="ni-i">🎁</div>
-                    <div class="ni-l">Refer & Earn</div>
+                <div id="user-main">
+                    <div class="nsec" data-t="main_sec">Main</div>
+                    <div class="ni active" onclick="goPage('dashboard')">
+                        <div class="ni-i">📊</div>
+                        <div class="ni-l" data-t="dashboard">Dashboard</div>
+                    </div>
+                    <div class="ni" id="nav-betterment" onclick="goPage('betterment')">
+                        <div class="ni-i">💡</div>
+                        <div class="ni-l" data-t="betterment_ai">Betterment AI</div>
+                    </div>
+                    <div class="ni" onclick="goPage('policy')">
+                        <div class="ni-i">🛡️</div>
+                        <div class="ni-l" data-t="my_policy">My Policy</div>
+                    </div>
+                    <div class="ni" onclick="goPage('claims')">
+                        <div class="ni-i">💰</div>
+                        <div class="ni-l" data-t="claims_payouts">Claims & Payouts</div>
+                        <div class="ni-b" id="claims-badge">1</div>
+                    </div>
+                    <div class="ni" id="nav-notifications" onclick="goPage('notifications')">
+                        <div class="ni-i">🔔</div>
+                        <div class="ni-l" data-t="notifications">Notifications</div>
+                        <div class="ni-b" id="notif-badge">3</div>
+                    </div>
                 </div>
 
-                <div class="nsec" style="margin-top:7px;" id="admin-nsec">Admin / Insurer</div>
-                <div class="ni" id="nav-fraud" onclick="goPage('fraud')">
-                    <div class="ni-i">🔍</div>
-                    <div class="ni-l">Fraud Monitor</div>
-                </div>
-                <div class="ni" id="nav-analytics" onclick="goPage('analytics')">
-                    <div class="ni-i">📈</div>
-                    <div class="ni-l">Analytics</div>
-                </div>
-                <div class="ni" id="nav-weather" onclick="goPage('weather')">
-                    <div class="ni-i">🌦️</div>
-                    <div class="ni-l">Weather Monitor</div>
+                <div id="user-enrollment">
+                    <div class="nsec" style="margin-top:7px;" data-t="enrollment">Enrollment</div>
+                    <div class="ni" onclick="goPage('onboard')">
+                        <div class="ni-i">✨</div>
+                        <div class="ni-l" data-t="get_coverage">Get Coverage</div>
+                    </div>
+                    <div class="ni" onclick="goPage('tiers')">
+                        <div class="ni-i">📋</div>
+                        <div class="ni-l" data-t="coverage_plans">Coverage Plans</div>
+                    </div>
+
                 </div>
 
-                <div class="nsec" style="margin-top:7px;">Tools</div>
-                <div class="ni" onclick="goPage('simulator')">
-                    <div class="ni-i">🧮</div>
-                    <div class="ni-l">Earnings Simulator</div>
+                <div id="admin-group" style="display:none;">
+                    <div class="nsec" style="margin-top:7px;" id="admin-nsec">Admin / Insurer</div>
+                    <div class="ni" id="nav-fraud" onclick="goPage('fraud')">
+                        <div class="ni-i">🔍</div>
+                        <div class="ni-l">Fraud Monitor</div>
+                    </div>
+                    <div class="ni" id="nav-analytics" onclick="goPage('analytics')">
+                        <div class="ni-i">📈</div>
+                        <div class="ni-l">Analytics</div>
+                    </div>
+                    <div class="ni" id="nav-weather" onclick="goPage('weather')">
+                        <div class="ni-i">🌦️</div>
+                        <div class="ni-l">Weather Monitor</div>
+                    </div>
                 </div>
-                <div class="ni" onclick="goPage('appeal')">
-                    <div class="ni-i">⚖️</div>
-                    <div class="ni-l">Claim Appeal</div>
+
+                <div id="user-tools">
+                    <div class="nsec" style="margin-top:7px;" data-t="tools_sec">Tools</div>
+                    <div class="ni" onclick="goPage('simulator')">
+                        <div class="ni-i">🧮</div>
+                        <div class="ni-l" data-t="simulator">Earnings Simulator</div>
+                    </div>
+                    <div class="ni" onclick="goPage('appeal')">
+                        <div class="ni-i">⚖️</div>
+                        <div class="ni-l" data-t="claim_appeal">Claim Appeal</div>
+                    </div>
                 </div>
-                <div class="ni" onclick="goPage('community')">
-                    <div class="ni-i">👥</div>
-                    <div class="ni-l">Community</div>
-                </div>
-                <div class="nsec" style="margin-top:7px;">Account</div>
+                <div class="nsec" style="margin-top:7px;" data-t="account_sec">Account</div>
                 <div class="ni" onclick="goPage('profile')">
                     <div class="ni-i">👤</div>
                     <div class="ni-l">Profile</div>
@@ -4491,7 +4909,7 @@
             <div class="sb-ft">
                 <button class="sb-bk" onclick="exitApp()">← Home</button>
                 <button class="sb-set" onclick="openSettings()" title="Settings">⚙️</button>
-                <button class="sb-set" onclick="toggleAI()" title="AI Assistant"
+                <button class="sb-set" id="sb-ai-btn" onclick="toggleAI()" title="AI Assistant"
                     style="background:rgba(var(--pRgb),.1);border-color:rgba(var(--pRgb),.2);">🤖</button>
             </div>
         </div>
@@ -4510,20 +4928,26 @@
                     <div class="ib-c">
                         <div class="ib-tag">Live · 20 March 2026 · <span class="user-city">Mumbai</span></div>
                         <div class="ib-h">Good morning, <em id="dash-name">Rajan</em> 👋</div>
+                        <div class="sh-r"
+                            style="position: absolute; top: 22px; right: 26px; display: flex; align-items: center; gap: 10px; z-index: 10;">
+                            <div class="sh-i ni" id="nav-notif" onclick="goPage('notif')"
+                                style="font-size: 18px; cursor: pointer;">🔔<div class="notif-dot"></div>
+                            </div>
+                        </div>
                         <div class="ib-p">Standard Shield triggered. ₹1,200 processing to your UPI.</div>
                     </div>
                     <div class="ib-stats">
                         <div class="ibs">
                             <div class="ibs-l">Protected</div>
-                            <div class="ibs-v">₹4,800</div>
+                            <div class="ibs-v" id="ib-stat-protected">₹0</div>
                         </div>
                         <div class="ibs">
                             <div class="ibs-l">Trust Score</div>
-                            <div class="ibs-v">92/100</div>
+                            <div class="ibs-v" id="ib-stat-trust">—</div>
                         </div>
                         <div class="ibs">
                             <div class="ibs-l">Alert</div>
-                            <div class="ibs-v">Red Rain</div>
+                            <div class="ibs-v" id="ib-stat-alert">None</div>
                         </div>
                     </div>
                 </div>
@@ -4542,32 +4966,51 @@
                 <div class="sg" id="dash-stats">
                     <div class="sc g" onclick="goPage('claims')">
                         <div class="sc-i">💸</div>
-                        <div class="sc-v" id="stat-protected">₹4,800</div>
+                        <div class="sc-v" id="stat-protected">₹0</div>
                         <div class="sc-l">Protected This Month</div>
-                        <div class="sc-d du">↑ 3 payouts</div>
+                        <div class="sc-d du" id="stat-payout-count">No payouts yet</div>
                     </div>
                     <div class="sc o" onclick="goPage('policy')">
                         <div class="sc-i">🗓️</div>
-                        <div class="sc-v" id="stat-premium">₹59</div>
+                        <div class="sc-v" id="stat-premium">₹—</div>
                         <div class="sc-l">Weekly Premium</div>
-                        <div class="sc-d" style="color:rgba(255,255,255,.3);">Auto-debit · Friday</div>
+                        <div class="sc-d" id="stat-premium-desc" style="color:rgba(255,255,255,.3);">Select a plan to
+                            activate</div>
                     </div>
                     <div class="sc b" onclick="goPage('profile')">
                         <div class="sc-i">🏅</div>
-                        <div class="sc-v">92</div>
+                        <div class="sc-v" id="stat-trust">—</div>
                         <div class="sc-l">Trust Score</div>
-                        <div class="sc-d du">Trust Badge ✓</div>
+                        <div class="sc-d du" id="stat-trust-desc">Verification pending</div>
                     </div>
-                    <div class="sc r">
-                        <div class="sc-i">⚡</div>
-                        <div class="sc-v">1</div>
-                        <div class="sc-l">Active Triggers</div>
-                        <div class="sc-d dd">Red Rain · Live</div>
+                    <div class="sc p" onclick="askAI('Explain my risk score')">
+                        <div class="sc-i">🧠</div>
+                        <div class="sc-v" id="dash-risk-score">0.00</div>
+                        <div class="sc-l">AI Risk Score</div>
+                        <div class="sc-d" id="dash-risk-label" style="color:rgba(255,255,255,.3);">Initializing...</div>
                     </div>
+
                 </div>
                 <div class="g65">
-                    <div>
-                        <div class="cov-h">
+                    <div id="dash-policy-wrap">
+                        <!-- GET COVERED CTA FOR NEW USERS -->
+                        <div id="dash-get-covered" class="cov-h"
+                            style="display: none; background: linear-gradient(135deg,rgba(var(--gRgb),.15),transparent); border: 1.5px dashed rgba(var(--gRgb),.3); cursor: pointer;"
+                            onclick="goPage('onboard')">
+                            <div class="ch" style="text-align: center; padding: 30px 20px;">
+                                <div style="font-size: 32px; margin-bottom: 12px;">🛡️</div>
+                                <div
+                                    style="font-family: var(--fh); font-size: 20px; color: var(--green); margin-bottom: 6px;">
+                                    You are not protected</div>
+                                <div style="font-size: 13px; color: rgba(255,255,255,.5); margin-bottom: 20px;">Activate
+                                    your income shield to get instant payouts during rain, heat, and outages.</div>
+                                <button class="lp-sub"
+                                    style="width: auto; padding: 10px 24px; background: var(--green); margin: 0 auto;">Get
+                                    Covered Now →</button>
+                            </div>
+                        </div>
+
+                        <div class="cov-h" id="dash-active-policy">
                             <div class="ch">
                                 <div class="ch-row">
                                     <div>
@@ -4633,36 +5076,9 @@
                 <div class="gc" id="dash-recent">
                     <div class="gc-bar"
                         style="background:linear-gradient(90deg,var(--green),var(--amber),transparent);"></div>
-                    <div class="gc-t">Recent Trigger Events</div>
-                    <div class="tl">
-                        <div class="tli">
-                            <div class="tl-dot"
-                                style="background:var(--green);box-shadow:0 0 7px rgba(var(--gRgb),.5);"></div>
-                            <div class="tl-b">
-                                <div class="tl-t">Heavy Rain Red Alert — <span class="user-city">Mumbai</span></div>
-                                <div class="tl-m"><span class="pill pr">🌧️ Extreme Rain</span><span>IMD · 20 Mar
-                                        06:14</span><span>3h 24m</span></div>
-                            </div>
-                            <div class="tl-a">+₹1,200</div>
-                        </div>
-                        <div class="tli">
-                            <div class="tl-dot" style="background:var(--green);"></div>
-                            <div class="tl-b">
-                                <div class="tl-t">Severe AQI — <span class="user-city">Mumbai</span> Metro</div>
-                                <div class="tl-m"><span class="pill po">💨 AQI 428</span><span>CPCB · 15
-                                        Mar</span><span>2h 10m</span></div>
-                            </div>
-                            <div class="tl-a">+₹840</div>
-                        </div>
-                        <div class="tli">
-                            <div class="tl-dot" style="background:var(--green);"></div>
-                            <div class="tl-b">
-                                <div class="tl-t">Zomato Platform Outage</div>
-                                <div class="tl-m"><span class="pill pp">📱 52min downtime</span><span>12 Mar</span>
-                                </div>
-                            </div>
-                            <div class="tl-a">+₹720</div>
-                        </div>
+                    <div class="gc-t" data-t="recent_triggers">Recent Trigger Events</div>
+                    <div class="tl" id="recent-triggers-list">
+                        <!-- Dynamic Content -->
                     </div>
                 </div>
             </div>
@@ -5054,91 +5470,70 @@
                 </div>
             </div>
 
-            <!-- REFERRAL -->
-            <div class="page" id="pg-referral">
-                <div class="ib" style="height:170px;"><img
-                        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80&auto=format"
-                        alt="Referral">
+
+
+            <!-- BETTERMENT AI -->
+            <div class="page" id="pg-betterment">
+                <div class="ib" style="height:200px;">
+                    <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=85&auto=format"
+                        alt="Betterment">
                     <div class="ib-ov"
-                        style="background:linear-gradient(to right,rgba(6,10,8,.9),rgba(6,10,8,.4) 70%,transparent);">
-                    </div>
+                        style="background: linear-gradient(to bottom, rgba(168, 85, 247, 0.4), var(--dg));"></div>
                     <div class="ib-c">
-                        <div class="ib-tag">Refer & Earn</div>
-                        <div class="ib-h">Share Trinetra.<br><em>Earn ₹100 per signup.</em></div>
+                        <div class="ib-tag">ML-Powered · 7-Day Outlook</div>
+                        <div class="ib-h">Financial Betterment AI</div>
+                        <div class="ib-p">Neural Network predictive insights to maximize your earnings security.</div>
                     </div>
                 </div>
-                <div class="g2">
-                    <div class="gc">
-                        <div class="gc-bar" style="background:linear-gradient(90deg,var(--amber),transparent);"></div>
-                        <div class="gc-t">Your Referral Code</div>
-                        <div class="ref-code" onclick="copyRef()" style="margin:12px 0;">
-                            <div class="ref-c" id="ref-code-text">GS-RJ8421</div>
-                            <div class="ref-act">Tap to copy</div>
-                            <span style="font-size:18px;">📋</span>
+
+                <div class="main-pad">
+                    <div class="bet-insight">
+                        <div class="bet-h" style="color:var(--purple); display:flex; align-items:center; gap:8px;">
+                            <span>🧠</span> AI Risk Probability Forecast
                         </div>
-                        <div style="font-size:12px;color:rgba(255,255,255,.4);line-height:1.6;">Share your code with
-                            other delivery partners. When they sign up and complete their first week, you both get
-                            <strong style="color:var(--amber);">₹100 bonus</strong>.
+                        <div class="bet-prob" id="bet-score">0.12<span>Risk Probability</span></div>
+                        <div class="bet-p" id="bet-insight-text">Wait while our neural network calculates your 48h risk
+                            profile...</div>
+
+                        <div class="forecast-bar" id="bet-forecast">
+                            <div class="f-day low" style="height:20%"></div>
+                            <div class="f-day low" style="height:25%"></div>
+                            <div class="f-day med" style="height:45%"></div>
+                            <div class="f-day high" style="height:85%"></div>
+                            <div class="f-day med" style="height:55%"></div>
+                            <div class="f-day low" style="height:30%"></div>
+                            <div class="f-day low" style="height:15%"></div>
                         </div>
-                        <div style="margin-top:14px;display:flex;gap:8px;">
-                            <button
-                                style="flex:1;padding:10px;border-radius:10px;border:1.5px solid rgba(var(--gRgb),.3);background:rgba(var(--gRgb),.08);color:var(--green);font-family:var(--ff);font-size:12px;font-weight:700;cursor:pointer;"
-                                onclick="showToast('WhatsApp share link copied!','success')">📱 Share on
-                                WhatsApp</button>
-                            <button
-                                style="flex:1;padding:10px;border-radius:10px;border:1.5px solid rgba(var(--bRgb),.3);background:rgba(var(--bRgb),.08);color:var(--blue);font-family:var(--ff);font-size:12px;font-weight:700;cursor:pointer;"
-                                onclick="showToast('Invite link copied to clipboard!','info')">🔗 Copy Link</button>
+                        <div
+                            style="display:flex; justify-content:space-between; margin-top:8px; font-size:10px; color:rgba(255,255,255,0.3); font-family:var(--fm);">
+                            <span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
                         </div>
                     </div>
-                    <div>
-                        <div class="gc" style="margin-bottom:12px;">
-                            <div class="gc-t">Your Earnings</div>
-                            <div style="font-family:var(--fh);font-size:36px;color:var(--amber);letter-spacing:-1px;">
-                                ₹300</div>
-                            <div style="font-size:12px;color:rgba(255,255,255,.35);margin-top:3px;">3 successful
-                                referrals</div>
-                            <div
-                                style="margin-top:12px;background:rgba(var(--aRgb),.08);border:1px solid rgba(var(--aRgb),.2);border-radius:10px;padding:12px 14px;">
-                                <div style="font-size:12px;color:var(--amber);font-weight:700;">Next payout: ₹100</div>
-                                <div style="font-size:11px;color:rgba(255,255,255,.35);margin-top:2px;">Priya's first
-                                    week completes in 3 days</div>
-                            </div>
+
+                    <div class="bet-grid">
+                        <div class="bet-card">
+                            <div class="bet-icon">🛡️</div>
+                            <div class="bet-h">Coverage Optimization</div>
+                            <div class="bet-p" id="bet-recommendation">Analyzing your current plan against upcoming
+                                hazards...</div>
+                            <button class="cta cta-p" style="width:100%; margin-top:16px; padding:10px; font-size:12px;"
+                                onclick="goPage('policy')">Maximize Coverage</button>
                         </div>
-                        <div class="gc" id="ref-recent">
-                            <div class="gc-t">Recent Referrals</div>
-                            <table class="dt" style="margin-top:8px;" id="ref-table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Joined</th>
-                                        <th>Status</th>
-                                        <th>Bonus</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Priya S.</td>
-                                        <td>18 Mar</td>
-                                        <td><span class="pill pg">Active</span></td>
-                                        <td style="color:var(--amber);">Pending</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Arun K.</td>
-                                        <td>10 Mar</td>
-                                        <td><span class="pill pg">Active</span></td>
-                                        <td style="color:var(--green);">₹100</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Meena R.</td>
-                                        <td>2 Mar</td>
-                                        <td><span class="pill pg">Active</span></td>
-                                        <td style="color:var(--green);">₹100</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div id="ref-empty"
-                                style="display:none;font-size:12px;color:rgba(255,255,255,0.4);text-align:center;padding:16px 0;">
-                                No active referrals yet. Start sharing to earn!</div>
+                        <div class="bet-card">
+                            <div class="bet-icon">⏰</div>
+                            <div class="bet-h">Safe Working Windows</div>
+                            <div class="bet-p">AI suggests: <b>Wed 10 AM - 4 PM</b> and <b>Fri 8 AM - 2 PM</b> for
+                                lowest risk of income loss.</div>
+                            <button class="cta cta-g" style="width:100%; margin-top:16px; padding:10px; font-size:12px;"
+                                onclick="askAI('Tell me more about safe windows')">Detailed Schedule</button>
+                        </div>
+                    </div>
+
+                    <div class="gc" style="margin-top:24px;">
+                        <div class="gc-t">Historical Betterment Accuracy</div>
+                        <div class="sc-c"
+                            style="height:100px; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,0.2); font-size:13px;">
+                            Analytics will populate after 7 days of active monitoring.
                         </div>
                     </div>
                 </div>
@@ -5202,13 +5597,37 @@
                             tower: match</div><span class="pill pg" style="margin-left:auto;">CLEAR</span>
                     </div>
                 </div>
+
+                <div class="gc"
+                    style="margin:16px 0; border:1px solid rgba(var(--pRgb),.3); background:linear-gradient(135deg, rgba(var(--pRgb),.1), rgba(var(--bRgb),.05)); position:relative; overflow:hidden;">
+                    <div
+                        style="position:absolute; top:-10px; right:-10px; font-size:60px; opacity:0.1; filter:grayscale(1);">
+                        🆘</div>
+                    <div style="display:flex; align-items:center; gap:20px; position:relative; z-index:1;">
+                        <div
+                            style="width:54px; height:54px; border-radius:15px; background:rgba(var(--pRgb),.15); display:flex; align-items:center; justify-content:center; font-size:24px; border:1px solid rgba(var(--pRgb),.3);">
+                            🆘</div>
+                        <div style="flex:1;">
+                            <div class="gc-t" style="color:var(--purple); margin-bottom:4px; font-size:16px;">Emergency
+                                Manual Claim</div>
+                            <div
+                                style="font-size:12px; color:rgba(255,255,255,.5); line-height:1.4; margin-bottom:12px;">
+                                Incident not automatically detected? File a manual request for AI-assisted fraud
+                                assessment and instant payout.</div>
+                            <button class="cta cta-p" onclick="openClaimModal()"
+                                style="padding:10px 24px; font-size:13px; background:var(--purple); border-color:var(--purple); box-shadow:0 10px 25px rgba(var(--pRgb),.2);">Apply
+                                for Manual Payout</button>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="gc" id="claims-history">
-                    <div class="gc-t" style="margin-bottom:12px;">Payout History</div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                        <div class="gc-t" style="margin-bottom:0;">Payout History</div>
+                    </div>
                     <table class="dt" id="claims-table">
                         <thead>
                             <tr>
-                                <th>Claim ID</th>
-                                <th>Trigger</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Amount</th>
@@ -5268,7 +5687,7 @@
                     <div class="ch">
                         <div class="ch-row">
                             <div>
-                                <div class="ch-lbl">Current Policy</div>
+                                <div class="ch-lbl" data-t="pol_curr">Current Policy</div>
                                 <div class="ch-tier" id="pol-tier">Standard Shield — Week 3</div>
                             </div>
                             <div class="ch-live">
@@ -5276,12 +5695,12 @@
                             </div>
                         </div>
                         <div class="ch-amt" id="pol-pay">₹1,200</div>
-                        <div class="ch-al">Max payout per trigger event</div>
+                        <div class="ch-al" data-t="pol_max">Max payout per trigger event</div>
                         <div class="ch-meta"
                             style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.08);">
                             <div>
                                 <div class="ch-mv" id="pol-prem">₹59</div>
-                                <div class="ch-ml">Weekly premium</div>
+                                <div class="ch-ml" data-t="pol_prem_l">Weekly premium</div>
                             </div>
                             <div>
                                 <div class="ch-mv">Orange+</div>
@@ -5289,7 +5708,7 @@
                             </div>
                             <div>
                                 <div class="ch-mv" id="pol-zone">Dharavi</div>
-                                <div class="ch-ml">Coverage zone</div>
+                                <div class="ch-ml" data-t="pol_zone">Coverage zone</div>
                             </div>
                         </div>
                     </div>
@@ -5297,7 +5716,7 @@
                 <div class="g2">
                     <div class="gc">
                         <div class="gc-bar" style="background:linear-gradient(90deg,var(--green),transparent);"></div>
-                        <div class="gc-t">Triggers Covered</div>
+                        <div class="gc-t" data-t="pol_trig_h">Triggers Covered</div>
                         <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;">
                             <div
                                 style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:9px;border:1px solid rgba(255,255,255,.06);">
@@ -5441,6 +5860,64 @@
                     <div class="ib-c">
                         <div class="ib-tag">Anti-Spoofing · Multi-Signal AI</div>
                         <div class="ib-h">Fraud Monitor</div>
+                    </div>
+                </div>
+
+                <!-- Admin City Fraud Selector -->
+                <div class="gc" style="margin-bottom: 12px; border: 1.5px solid rgba(255,255,255,0.05);">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="gc-t">City Intelligence</div>
+                        <select id="admin-fraud-city" onchange="updateCityFraudScore()"
+                            style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:8px; padding:6px 12px; font-family:var(--ff); font-size:12px; cursor:pointer; outline:none;">
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Kolkata">Kolkata</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex; align-items:center; gap:20px; margin-top:15px;">
+                        <div class="fr" style="width:80px; height:80px;">
+                            <svg viewBox="0 0 96 96" width="80" height="80">
+                                <circle cx="48" cy="48" r="36" fill="none" stroke="rgba(255,255,255,.08)"
+                                    stroke-width="10" />
+                                <circle id="city-fraud-circle" cx="48" cy="48" r="36" fill="none" stroke="var(--green)"
+                                    stroke-width="10" stroke-dasharray="200 226" stroke-linecap="round" />
+                            </svg>
+                            <div class="fr-c">
+                                <div id="city-fraud-score" class="fr-n" style="font-size:20px; color:var(--green);">88
+                                </div>
+                                <div class="fr-l" style="font-size:8px;">SAFE</div>
+                            </div>
+                        </div>
+                        <div style="flex:1;">
+                            <div style="font-size:11px; color:rgba(255,255,255,0.4); margin-bottom:5px;">Network
+                                Reliability Index</div>
+                            <div style="display:flex; flex-direction:column; gap:8px;">
+                                <div>
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:2px;">
+                                        <span>GPS Stability</span><span id="gps-score-val">94%</span>
+                                    </div>
+                                    <div class="prog-track" style="height:4px;">
+                                        <div id="gps-score-fill" class="prog-fill"
+                                            style="width:94%; background:var(--green);"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div
+                                        style="display:flex; justify-content:space-between; font-size:10px; margin-bottom:2px;">
+                                        <span>Signal Density</span><span id="signal-score-val">82%</span>
+                                    </div>
+                                    <div class="prog-track" style="height:4px;">
+                                        <div id="signal-score-fill" class="prog-fill"
+                                            style="width:82%; background:var(--green);"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="ab ab-o">
@@ -5794,8 +6271,9 @@
                         style="background:linear-gradient(to top,rgba(6,10,8,.92) 0%,rgba(6,10,8,.3) 60%,transparent);">
                     </div>
                     <div class="ib-c">
-                        <div class="ib-tag">Enrollment · 90 Seconds</div>
-                        <div class="ib-h">Income protection for<br><em>India's delivery heroes</em></div>
+                        <div class="ib-tag" data-t="onboard_h">Enrollment · 90 Seconds</div>
+                        <div class="ib-h" data-t="land_hero">Income protection for<br><em>India's delivery heroes</em>
+                        </div>
                     </div>
                 </div>
                 <div class="ob-steps">
@@ -5818,7 +6296,7 @@
                 <div class="g2">
                     <div class="gc">
                         <div class="gc-bar" style="background:linear-gradient(90deg,var(--green),transparent);"></div>
-                        <div class="gc-t">Worker Details</div>
+                        <div class="gc-t" data-t="onboard_details">Worker Details</div>
                         <div style="margin-top:9px;">
                             <div class="fr2">
                                 <div class="fg"><label class="fl">Full Name</label><input class="fi" id="ob-name"
@@ -5903,7 +6381,7 @@
                 <div class="g2">
                     <div class="gc">
                         <div class="gc-bar" style="background:linear-gradient(90deg,var(--blue),transparent);"></div>
-                        <div class="gc-t" style="margin-bottom:0;">Common Questions</div>
+                        <div class="gc-t" data-t="faq_title" style="margin-bottom:0;">Common Questions</div>
                         <div class="acc-item open" onclick="toggleAcc(this)">
                             <div class="acc-head">
                                 <div class="acc-head-t">How do I receive my payout?</div>
@@ -5997,9 +6475,6 @@
                             <div style="display:flex;flex-direction:column;gap:7px;margin-top:4px;">
                                 <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;cursor:pointer;color:rgba(255,255,255,.7);"
                                     onclick="goPage('tiers')">Coverage Plans <span
-                                        style="color:rgba(255,255,255,.25);">→</span></div>
-                                <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;cursor:pointer;color:rgba(255,255,255,.7);"
-                                    onclick="goPage('referral')">Refer & Earn ₹100 <span
                                         style="color:rgba(255,255,255,.25);">→</span></div>
                                 <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;font-size:13px;cursor:pointer;color:rgba(255,255,255,.7);"
                                     onclick="showToast('Privacy Policy: trinetra.in/privacy','info')">Privacy Policy
@@ -6260,188 +6735,29 @@
                 </div>
             </div>
 
-            <!-- COMMUNITY -->
-            <div class="page" id="pg-community">
-                <div class="ib" style="height:190px;"><img
-                        src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1600&q=80&auto=format"
-                        alt="Community">
-                    <div class="ib-ov"
-                        style="background:linear-gradient(to right,rgba(6,10,8,.9),rgba(6,10,8,.35) 70%,transparent);">
-                    </div>
-                    <div class="ib-c">
-                        <div class="ib-tag">Community · <span class="user-city">Mumbai</span> Delivery Partners</div>
-                        <div class="ib-h">47,000 riders.<br><em>One shield.</em></div>
-                    </div>
-                    <div class="ib-stats">
-                        <div class="ibs">
-                            <div class="ibs-l">Members</div>
-                            <div class="ibs-v">47K+</div>
-                        </div>
-                        <div class="ibs">
-                            <div class="ibs-l">Avg. Saving</div>
-                            <div class="ibs-v">₹4.2K/mo</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="g65" style="margin-bottom:14px;">
-                    <div class="gc">
-                        <div class="gc-bar" style="background:linear-gradient(90deg,var(--purple),transparent);"></div>
-                        <div class="gc-t" style="margin-bottom:14px;">Community Feed</div>
-                        <div style="display:flex;flex-direction:column;gap:11px;" id="community-feed">
-                            <div
-                                style="padding:13px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07);">
-                                <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                                    <div
-                                        style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">
-                                        🏍️</div>
-                                    <div>
-                                        <div style="font-size:13px;font-weight:600;">Arjun M.</div>
-                                        <div style="font-size:11px;color:rgba(255,255,255,.3);">Dharavi · Standard · 2h
-                                            ago</div>
-                                    </div><span class="pill pb" style="margin-left:auto;">PAID</span>
-                                </div>
-                                <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;">Got my ₹1,200
-                                    payout in under 90 seconds during today's rain! Didn't even have to open the app.
-                                    This platform is the real deal.</div>
-                                <div style="display:flex;gap:12px;margin-top:9px;"><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;padding:0;"
-                                        onclick="likePost(this)">👍 <span>24</span></button><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;padding:0;"
-                                        onclick="showToast('Reply feature coming soon!','info')">💬
-                                        Reply</button><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.3);font-size:12px;cursor:pointer;margin-left:auto;padding:0;"
-                                        onclick="askAI('Arjun got his payout in 90 seconds during rain. How does this work?');toggleAI()">🤖
-                                        Ask AI</button></div>
-                            </div>
-                            <div
-                                style="padding:13px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07);">
-                                <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                                    <div
-                                        style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#f59e0b,#d97706);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">
-                                        🚴</div>
-                                    <div>
-                                        <div style="font-size:13px;font-weight:600;">Priya S.</div>
-                                        <div style="font-size:11px;color:rgba(255,255,255,.3);">Andheri · Pro Shield ·
-                                            5h ago</div>
-                                    </div><span class="pill pg" style="margin-left:auto;">TRUST BADGE</span>
-                                </div>
-                                <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;">Upgraded to
-                                    Pro Shield last week. The curfew coverage finally convinced me — Section 144 in my
-                                    zone and got ₹2,500 back. Worth every extra rupee.</div>
-                                <div style="display:flex;gap:12px;margin-top:9px;"><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;padding:0;"
-                                        onclick="likePost(this)">👍 <span>61</span></button><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;padding:0;"
-                                        onclick="showToast('Reply feature coming soon!','info')">💬 Reply</button></div>
-                            </div>
-                            <div
-                                style="padding:13px;background:rgba(255,255,255,.03);border-radius:12px;border:1px solid rgba(255,255,255,.07);">
-                                <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px;">
-                                    <div
-                                        style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">
-                                        🛵</div>
-                                    <div>
-                                        <div style="font-size:13px;font-weight:600;">Deepak K.</div>
-                                        <div style="font-size:11px;color:rgba(255,255,255,.3);">Kurla · Basic Shield ·
-                                            1d ago</div>
-                                    </div>
-                                </div>
-                                <div style="font-size:13px;color:rgba(255,255,255,.75);line-height:1.55;">Question: Does
-                                    the AQI trigger work during Diwali pollution? The smog was terrible last month and I
-                                    couldn't ride at all.</div>
-                                <div style="display:flex;gap:12px;margin-top:9px;"><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.4);font-size:12px;cursor:pointer;display:flex;align-items:center;gap:5px;padding:0;"
-                                        onclick="likePost(this)">👍 <span>12</span></button><button
-                                        style="background:none;border:none;color:rgba(255,255,255,.35);font-size:12px;cursor:pointer;padding:0;"
-                                        onclick="toggleAI();askAI('Does the AQI trigger cover Diwali pollution days in Mumbai?')">🤖
-                                        Ask AI</button></div>
-                            </div>
-                        </div>
-                        <div style="margin-top:13px;display:flex;gap:9px;">
-                            <input class="fi" id="comm-post" placeholder="Share your experience or ask the community..."
-                                style="flex:1;">
-                            <button
-                                style="padding:10px 18px;border-radius:10px;border:none;background:var(--green);color:#fff;font-family:var(--ff);font-size:13px;font-weight:700;cursor:pointer;flex-shrink:0;transition:all .2s;"
-                                onclick="postCommunity()">Post</button>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="gc" style="margin-bottom:13px;">
-                            <div class="gc-bar" style="background:linear-gradient(90deg,var(--amber),transparent);">
-                            </div>
-                            <div class="gc-t">Top Earners Saved · This Month</div>
-                            <div style="display:flex;flex-direction:column;gap:7px;margin-top:11px;">
-                                <div
-                                    style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(var(--aRgb),.07);border-radius:10px;border:1px solid rgba(var(--aRgb),.18);">
-                                    <span style="font-size:17px;">🥇</span>
-                                    <div style="flex:1;">
-                                        <div style="font-size:12px;font-weight:600;">Sunita R.</div>
-                                        <div style="font-size:10px;color:rgba(255,255,255,.3);">Dharavi · Pro Shield
-                                        </div>
-                                    </div>
-                                    <div style="font-family:var(--fh);font-size:15px;color:var(--amber);">₹28,500</div>
-                                </div>
-                                <div
-                                    style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);">
-                                    <span style="font-size:17px;">🥈</span>
-                                    <div style="flex:1;">
-                                        <div style="font-size:12px;font-weight:600;">Ankit P.</div>
-                                        <div style="font-size:10px;color:rgba(255,255,255,.3);">Kurla · Pro</div>
-                                    </div>
-                                    <div style="font-family:var(--fh);font-size:15px;color:rgba(255,255,255,.75);">
-                                        ₹24,200</div>
-                                </div>
-                                <div
-                                    style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.07);">
-                                    <span style="font-size:17px;">🥉</span>
-                                    <div style="flex:1;">
-                                        <div style="font-size:12px;font-weight:600;">Meena T.</div>
-                                        <div style="font-size:10px;color:rgba(255,255,255,.3);">Andheri · Standard</div>
-                                    </div>
-                                    <div style="font-family:var(--fh);font-size:15px;color:rgba(200,150,80,.8);">₹19,800
-                                    </div>
-                                </div>
-                                <div
-                                    style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(var(--gRgb),.06);border-radius:10px;border:1px solid rgba(var(--gRgb),.18);">
-                                    <span style="font-size:17px;">⭐</span>
-                                    <div style="flex:1;">
-                                        <div style="font-size:12px;font-weight:600;" id="lb-you">You</div>
-                                        <div style="font-size:10px;color:rgba(255,255,255,.3);">Dharavi · Standard</div>
-                                    </div>
-                                    <div style="font-family:var(--fh);font-size:15px;color:var(--green);">₹4,800</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gc">
-                            <div class="gc-t">Zone Stats · Dharavi</div>
-                            <div style="display:flex;flex-direction:column;gap:7px;margin-top:10px;">
-                                <div
-                                    style="display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-                                    <span style="color:rgba(255,255,255,.45);">Active partners in
-                                        zone</span><strong>1,247</strong>
-                                </div>
-                                <div
-                                    style="display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-                                    <span style="color:rgba(255,255,255,.45);">Avg. monthly payout</span><strong
-                                        style="color:var(--green);">₹2,840</strong>
-                                </div>
-                                <div
-                                    style="display:flex;justify-content:space-between;font-size:12px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.06);">
-                                    <span style="color:rgba(255,255,255,.45);">Triggers this
-                                        month</span><strong>14</strong>
-                                </div>
-                                <div style="display:flex;justify-content:space-between;font-size:12px;padding:7px 0;">
-                                    <span style="color:rgba(255,255,255,.45);">Zone risk level</span><span
-                                        class="pill pr">HIGH RISK</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div><!-- /main-content -->
+
+        <!-- BOTTOM NAV (MOBILE) -->
+        <div id="bottom-nav">
+            <div class="bn-item active" id="bn-dashboard" onclick="goPage('dashboard')">
+                <div class="bn-icon">🏠</div>
+                <div class="bn-lbl" data-t="nav_home">Home</div>
+            </div>
+            <div class="bn-item" id="bn-claims" onclick="goPage('claims')">
+                <div class="bn-icon">💸</div>
+                <div class="bn-lbl" data-t="nav_claims">Claims</div>
+            </div>
+            <div class="bn-item" id="bn-policy" onclick="goPage('policy')">
+                <div class="bn-icon">🛡️</div>
+                <div class="bn-lbl" data-t="nav_policy">Policy</div>
+            </div>
+            <div class="bn-item" id="bn-profile" onclick="goPage('profile')">
+                <div class="bn-icon">👤</div>
+                <div class="bn-lbl" data-t="nav_profile">Profile</div>
+            </div>
+        </div>
     </div><!-- /app -->
+
     <div id="mob-header">
         <button id="mob-hamburger" onclick="toggleMobSidebar()" aria-label="Open menu">☰</button>
         <div id="mob-header-title">🛡️ Trinetra</div>
@@ -6451,7 +6767,8 @@
         </div>
     </div>
 
-    <script src="/app.js?v=2.0.2" defer></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="app.js?v=2.0.5"></script>
 </body>
 
 </html>

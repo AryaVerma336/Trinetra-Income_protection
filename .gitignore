@@ -1,16 +1,8 @@
-# Dependencies
-node_modules/
-
-# Environment variables — never commit this
-.env
-
-# SQLite database — contains user data, exclude from repo
-database.sqlite
-
-# OS junk
+# Trinetra Global Ignore
+backend/node_modules/
+backend/database.sqlite
+backend/.env
+ml/artifacts/*.joblib
+ml/artifacts/*.csv
 .DS_Store
-Thumbs.db
-
-# Logs
 *.log
-npm-debug.log*

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trinetra-v4'; // Final Bump to clear all caches
+const CACHE_NAME = 'trinetra-v5'; // Final Bump to clear all caches
 const ASSETS = [
   '/',
   '/index.html',
